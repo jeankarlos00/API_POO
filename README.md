@@ -17,7 +17,7 @@ A API foi criada para realizar operações básicas de login, registro de usuár
 As funções serão acessadas por rotas, enviadas pelo aplicativo POSTMAN
 
 ## Rotas
-# Principal - /api
+## Principal - /api
 
 | Rotas | Função |
 | ------ | ------ |
