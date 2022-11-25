@@ -1,6 +1,6 @@
 package br.iesb.cco.apipoo.controller;
 
-import br.iesb.cco.apipoo.dto.UserDTO;
+import br.iesb.cco.apipoo.model.UserEntity;
 import br.iesb.cco.apipoo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping("/api")
 public class AuthController {
 
     @Autowired
     private AuthService service;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDTO user) {
+    public ResponseEntity<String> login(@RequestBody UserEntity user) {
         String token = service.login(user);
 
         if (token == null) {
@@ -30,8 +32,8 @@ public class AuthController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(required = false) String name) {
-        List<UserDTO> list = service.getUsers(name);
+    public ResponseEntity<List<UserEntity>> getUsers() {
+        List<UserEntity> list = service.getUsers();
         if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -39,23 +41,20 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDTO user) {
+    public ResponseEntity<String> signup(@RequestBody UserEntity user) {
 
         int result = service.signup(user);
 
         if (result == 1) {
-            return ResponseEntity.badRequest().body("Nome de usuario invalido!");
-        } else if (result == 2) {
             return ResponseEntity.badRequest().body("E-mail de usuario invalido!");
-        } else if (result == 3) {
+        } else if (result == 2) {
             return ResponseEntity.badRequest().body("Senha deve ter mais que 6 caracters.");
         }
-
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/forgotpass")
-    public ResponseEntity<String> forgotPassword(@RequestBody UserDTO user) {
+    public ResponseEntity<String> forgotPassword(@RequestBody UserEntity user) {
 
         int result = service.forgotPassword(user);
 

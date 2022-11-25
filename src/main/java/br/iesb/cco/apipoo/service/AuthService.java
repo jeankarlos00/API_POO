@@ -1,25 +1,21 @@
 package br.iesb.cco.apipoo.service;
 
-import br.iesb.cco.apipoo.dto.UserDTO;
 import br.iesb.cco.apipoo.model.UserEntity;
 import br.iesb.cco.apipoo.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Service
-@Scope("singleton")
+@Service @Transactional @Slf4j
 public class AuthService {
-
     public static final Pattern VALID_EMAIL =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -47,7 +43,7 @@ public class AuthService {
         }
     }
 
-    public String login(UserDTO user) {
+    public String login(UserEntity user) {
         String email = user.getEmail();
         String pass = user.getPassword();
 
@@ -59,24 +55,17 @@ public class AuthService {
         return null;
     }
 
-    public List<UserDTO> getUsers(String name) {
-        String filter = name != null ? name : "";
-        Optional<List<UserEntity>> result = repo.findByNameContaining(filter);
-
-        List<UserDTO> list = new ArrayList<>();
-
-        if (result.isPresent()) {
-            List<UserEntity> users = result.get();
-            for (UserEntity u : users) {
-                UserDTO dto = new UserDTO(u.getId(), u.getEmail(), u.getPassword());
-                list.add(dto);
-            }
-        }
-
-        return list;
+    public List<UserEntity> getUser(String email) {
+        log.info("Buscando usuário {}", email);
+        return repo.findByEmailContaining(email);
     }
 
-    public int signup(UserDTO user) {
+    public List<UserEntity> getUsers() {
+        log.info("Buscando usuários");
+        return repo.findAll();
+    }
+
+    public int signup(UserEntity user) {
         Matcher matcher = VALID_EMAIL.matcher(user.getEmail());
         if (!matcher.find()) {
             return 1;
@@ -85,6 +74,8 @@ public class AuthService {
         if (user.getPassword().length() < 6) {
             return 2;
         }
+
+        log.info("Salvando usuário {} no banco de dados", user.getEmail());
 
         UserEntity entity = new UserEntity();
         entity.setEmail(user.getEmail());
@@ -98,7 +89,7 @@ public class AuthService {
         return 0;
     }
 
-    public int forgotPassword(UserDTO user) {
+    public int forgotPassword(UserEntity user) {
         Matcher matcher = VALID_EMAIL.matcher(user.getEmail());
         if (!matcher.find()) {
             return 1;
