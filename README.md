@@ -9,6 +9,7 @@ API roda em Java com integração do Spring Boot pela IDE IntelliJ IdeaC, o intr
 1. Jean Carlos Gomes Aguiar 1922130009
 
 ## Linguagem usada **Spring Boot**
+## Banco de dados usado **PostgreSQL**
 
 ## Descriçao
 
