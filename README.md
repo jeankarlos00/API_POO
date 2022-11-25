@@ -18,7 +18,7 @@ As funções serão acessadas por rotas, enviadas pelo aplicativo POSTMAN.
 
 ## Testes
 
-Testes podem ser feitos utilizando a url = [ Base URL: <apipoo.herokuapp.com/> ]
+Testes podem ser feitos utilizando a url = [ Base URL: <https://apipoo.herokuapp.com/> ]
 
 ## Rotas
 ## Principal - /api
