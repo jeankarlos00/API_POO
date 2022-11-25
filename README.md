@@ -14,7 +14,11 @@ API roda em Java com integração do Spring Boot pela IDE IntelliJ IdeaC, o intr
 ## Descriçao
 
 A API foi criada para realizar operações básicas de login, registro de usuários, esquecer senha, para cadastro de livros em uma biblioteca e a busca desses livros.
-As funções serão acessadas por rotas, enviadas pelo aplicativo POSTMAN
+As funções serão acessadas por rotas, enviadas pelo aplicativo POSTMAN.
+
+## Testes
+
+Testes podem ser feitos utilizando a url = [ Base URL: apipoo.herokuapp.com/ ]
 
 ## Rotas
 ## Principal - /api
