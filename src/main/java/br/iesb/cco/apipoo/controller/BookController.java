@@ -19,7 +19,7 @@ public class BookController {
     BookRepository bookRepository;
 
     @GetMapping("/getbooks")
-    public ResponseEntity<List<BookEntity>> getAllTutorials(@RequestParam(required = false) String title) {
+    public ResponseEntity<List<BookEntity>> getAllBooks(@RequestParam(required = false) String title) {
         try {
             List<BookEntity> bookEntities = new ArrayList<BookEntity>();
 
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     @PostMapping("/savebook")
-    public ResponseEntity<BookEntity> createTutorial(@RequestBody BookEntity bookEntity) {
+    public ResponseEntity<BookEntity> createBook(@RequestBody BookEntity bookEntity) {
         try {
             BookEntity _bookEntity = bookRepository
                     .save(new BookEntity(bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getPublisher(), bookEntity.getPages(), bookEntity.getGenre()));
@@ -51,7 +51,7 @@ public class BookController {
 
 
     @DeleteMapping("/delbook/{id}")
-    public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+    public ResponseEntity<HttpStatus> deleteBook(@PathVariable("id") long id) {
         try {
             bookRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -61,7 +61,7 @@ public class BookController {
     }
 
     @DeleteMapping("/delbooks")
-    public ResponseEntity<HttpStatus> deleteAllTutorials() {
+    public ResponseEntity<HttpStatus> deleteAllBooks() {
         try {
             bookRepository.deleteAll();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

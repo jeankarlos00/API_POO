@@ -20,7 +20,7 @@ public class BookEntity {
     private String publisher;
 
     @Column(name = "pages ", nullable = false)
-    private String pages ;
+    private Integer pages ;
 
     @Column(name = "genre ", nullable = false)
     private String genre;
@@ -29,7 +29,7 @@ public class BookEntity {
 
     }
 
-    public BookEntity(String title, String author, String publisher, String pages, String genre) {
+    public BookEntity(String title, String author, String publisher, Integer pages, String genre) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
@@ -67,11 +67,11 @@ public class BookEntity {
         this.publisher = publisher;
     }
 
-    public String getPages() {
+    public Integer getPages() {
         return pages;
     }
 
-    public void setPages(String pages) {
+    public void setPages(Integer pages) {
         this.pages = pages;
     }
 

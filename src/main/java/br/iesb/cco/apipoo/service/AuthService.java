@@ -55,11 +55,6 @@ public class AuthService {
         return null;
     }
 
-    public List<UserEntity> getUser(String email) {
-        log.info("Buscando usuário {}", email);
-        return repo.findByEmailContaining(email);
-    }
-
     public List<UserEntity> getUsers() {
         log.info("Buscando usuários");
         return repo.findAll();
